@@ -42,7 +42,7 @@ function Reveal({ children, delay = 0, className = '' }) {
     <motion.div
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: false, amount: 0.15 }}
       transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
@@ -120,6 +120,286 @@ function FloralDivider({ light = false }) {
   )
 }
 
+function EnvelopeScene({ onOpen }) {
+  // stages: idle → flapOpen → cardRise → cardBack → done
+  const [stage, setStage] = useState('idle')
+  const W = 340, H = 220, MID = 170, FLAP_H = 115
+
+  const handleClick = () => {
+    if (stage !== 'idle') return
+    setStage('flapOpen')
+    setTimeout(() => setStage('cardRise'), 700)
+    setTimeout(() => setStage('cardBack'), 2200)
+    setTimeout(() => setStage('done'), 3400)
+    setTimeout(() => onOpen(), 3500)
+  }
+
+  const isOpen = stage !== 'idle'
+  const cardRising = stage === 'cardRise'
+  const cardBack = stage === 'cardBack' || stage === 'done'
+
+  return (
+    <>
+      {/* envelope wrapper */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: stage === 'done' ? 0 : 1, y: stage === 'done' ? 30 : 0 }}
+        transition={{ duration: stage === 'done' ? 0.5 : 1.1, ease: [0.22, 1, 0.36, 1] }}
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}
+      >
+        <motion.div animate={{ opacity: isOpen ? 0 : 1 }} transition={{ duration: 0.3 }} style={{ textAlign: 'center' }}>
+          <p style={{ fontFamily: 'Amiri, serif', fontSize: 22, color: '#d8bc83', marginBottom: 4, letterSpacing: '0.05em' }}>بَارَكَ اللهُ لَكُمَا</p>
+          <p style={{ fontSize: 8, letterSpacing: '0.32em', color: 'rgba(216,188,131,0.5)', textTransform: 'uppercase' }}>Bismillah-ir-Rahman-ir-Raheem</p>
+        </motion.div>
+
+        {/* ROPE + swinging envelope */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <motion.div
+            animate={{ rotate: isOpen ? 0 : [0, 5, -5, 3, -3, 1, -1, 0] }}
+            transition={{ duration: 4, repeat: isOpen ? 0 : Infinity, ease: 'easeInOut' }}
+            style={{ transformOrigin: 'top center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+          >
+            {/* rope */}
+            <svg width="16" height="50" viewBox="0 0 16 50" style={{ display: 'block' }}>
+              {[0,1,2,3,4,5,6,7,8,9].map(i => (
+                <line key={i} x1="8" y1={i*5} x2="8" y2={i*5+5} stroke={i%2===0?'#a07840':'#c4a060'} strokeWidth="3" strokeLinecap="round" />
+              ))}
+              <circle cx="8" cy="3" r="4" fill="#d8bc83" />
+            </svg>
+
+            <div onClick={handleClick} style={{ width: W, height: H, position: 'relative', cursor: stage === 'idle' ? 'pointer' : 'default', perspective: 1000 }}>
+
+              {/* CARD */}
+              <motion.div
+                animate={
+                  cardBack
+                    ? { y: 0, scale: 1, opacity: 0, transition: { duration: 0.9, ease: [0.4, 0, 0.6, 1] } }
+                    : cardRising
+                    ? { y: -150, scale: 1, opacity: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } }
+                    : { y: 0, scale: 1, opacity: 0, transition: { duration: 0.3 } }
+                }
+                style={{ position: 'absolute', left: 28, right: 28, top: 20, bottom: 20, zIndex: 20, transformStyle: 'preserve-3d' }}
+              >
+            {/* front face */}
+            <div style={{
+              position: 'absolute', inset: 0, backfaceVisibility: 'hidden',
+              background: 'linear-gradient(150deg,#fdf8ef,#f5ead6)',
+              border: '1px solid rgba(168,136,80,0.55)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '16px 20px',
+            }}>
+              <div style={{ position: 'absolute', inset: 7, border: '1px solid rgba(168,136,80,0.25)', pointerEvents: 'none' }} />
+              <Sparkles size={14} strokeWidth={1.2} style={{ color: '#a48754' }} />
+              <p style={{ fontSize: 8, letterSpacing: '0.3em', color: '#987744', textTransform: 'uppercase' }}>Nikkah Invitation</p>
+              <p style={{ fontFamily: 'Cormorant Garamond,Georgia,serif', fontSize: 26, color: '#263a2e', lineHeight: 1.1, textAlign: 'center' }}>
+                Tuba <span style={{ color: '#a48754', fontStyle: 'italic' }}>&amp;</span> Mahafuz
+              </p>
+              <div style={{ width: 40, height: 1, background: 'rgba(168,136,80,0.5)' }} />
+              <p style={{ fontSize: 8, letterSpacing: '0.22em', color: '#8a8e80', textTransform: 'uppercase' }}>06 · 12 · 2026</p>
+            </div>
+            {/* back face */}
+            <div style={{
+              position: 'absolute', inset: 0, backfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              background: 'linear-gradient(145deg,#1a3326,#2a4a38)',
+              border: '1px solid rgba(216,188,131,0.35)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.5)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <div style={{ position: 'absolute', inset: 8, border: '1px solid rgba(216,188,131,0.2)' }} />
+              <Heart size={26} strokeWidth={1} style={{ color: 'rgba(216,188,131,0.65)' }} />
+            </div>
+          </motion.div>
+
+          {/* envelope body */}
+          <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: 'absolute', inset: 0, zIndex: 3 }}>
+            <defs>
+              <linearGradient id="eB" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#1e3d2c" />
+                <stop offset="50%" stopColor="#152e20" />
+                <stop offset="100%" stopColor="#0f2018" />
+              </linearGradient>
+              <linearGradient id="eL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#0f2018" /><stop offset="100%" stopColor="#1a3326" /></linearGradient>
+              <linearGradient id="eR" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#1a3326" /><stop offset="100%" stopColor="#0f2018" /></linearGradient>
+              <linearGradient id="eBt" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#172a1e" /><stop offset="100%" stopColor="#0d1c14" /></linearGradient>
+              <linearGradient id="goldShine" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#8a6a2a" />
+                <stop offset="40%" stopColor="#d8bc83" />
+                <stop offset="60%" stopColor="#f0dfa8" />
+                <stop offset="100%" stopColor="#8a6a2a" />
+              </linearGradient>
+              {/* Islamic 8-pointed star tessellation */}
+              <pattern id="geo" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+                <polygon points="16,1 19.2,11 29.5,11 21.5,17.5 24.5,27.5 16,21.5 7.5,27.5 10.5,17.5 2.5,11 12.8,11"
+                  fill="none" stroke="rgba(216,188,131,0.2)" strokeWidth="0.7" />
+                <circle cx="16" cy="16" r="3" fill="none" stroke="rgba(216,188,131,0.15)" strokeWidth="0.5" />
+                <line x1="0" y1="16" x2="32" y2="16" stroke="rgba(216,188,131,0.08)" strokeWidth="0.4" />
+                <line x1="16" y1="0" x2="16" y2="32" stroke="rgba(216,188,131,0.08)" strokeWidth="0.4" />
+                <line x1="0" y1="0" x2="32" y2="32" stroke="rgba(216,188,131,0.05)" strokeWidth="0.4" />
+                <line x1="32" y1="0" x2="0" y2="32" stroke="rgba(216,188,131,0.05)" strokeWidth="0.4" />
+                <circle cx="0" cy="0" r="2" fill="none" stroke="rgba(216,188,131,0.1)" strokeWidth="0.5" />
+                <circle cx="32" cy="0" r="2" fill="none" stroke="rgba(216,188,131,0.1)" strokeWidth="0.5" />
+                <circle cx="0" cy="32" r="2" fill="none" stroke="rgba(216,188,131,0.1)" strokeWidth="0.5" />
+                <circle cx="32" cy="32" r="2" fill="none" stroke="rgba(216,188,131,0.1)" strokeWidth="0.5" />
+              </pattern>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="1.5" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+
+            {/* base body */}
+            <rect x="0" y="0" width={W} height={H} fill="url(#eB)" />
+            {/* tessellation overlay */}
+            <rect x="0" y="0" width={W} height={H} fill="url(#geo)" />
+
+            {/* side + bottom flap shading */}
+            <polygon points={`0,0 0,${H} ${MID},${H*0.56}`} fill="url(#eL)" opacity="0.55" />
+            <polygon points={`${W},0 ${W},${H} ${MID},${H*0.56}`} fill="url(#eR)" opacity="0.55" />
+            <polygon points={`0,${H} ${W},${H} ${MID},${H*0.56}`} fill="url(#eBt)" opacity="0.65" />
+
+            {/* outer gold shimmer border */}
+            <rect x="0" y="0" width={W} height={H} fill="none" stroke="url(#goldShine)" strokeWidth="1.5" />
+            {/* inner border */}
+            <rect x="7" y="7" width={W-14} height={H-14} fill="none" stroke="rgba(216,188,131,0.35)" strokeWidth="0.7" />
+            <rect x="12" y="12" width={W-24} height={H-24} fill="none" stroke="rgba(216,188,131,0.15)" strokeWidth="0.5" />
+
+            {/* corner arabesque ornaments */}
+            <g stroke="url(#goldShine)" strokeWidth="1.2" fill="none" filter="url(#glow)">
+              {/* top-left */}
+              <path d="M7,22 L7,7 L22,7" />
+              <path d="M7,14 Q14,7 22,7" strokeWidth="0.6" opacity="0.6" />
+              <circle cx="7" cy="7" r="2.5" fill="rgba(216,188,131,0.4)" stroke="none" />
+              {/* top-right */}
+              <path d={`M${W-7},22 L${W-7},7 L${W-22},7`} />
+              <path d={`M${W-7},14 Q${W-14},7 ${W-22},7`} strokeWidth="0.6" opacity="0.6" />
+              <circle cx={W-7} cy="7" r="2.5" fill="rgba(216,188,131,0.4)" stroke="none" />
+              {/* bottom-left */}
+              <path d={`M7,${H-22} L7,${H-7} L22,${H-7}`} />
+              <path d={`M7,${H-14} Q14,${H-7} 22,${H-7}`} strokeWidth="0.6" opacity="0.6" />
+              <circle cx="7" cy={H-7} r="2.5" fill="rgba(216,188,131,0.4)" stroke="none" />
+              {/* bottom-right */}
+              <path d={`M${W-7},${H-22} L${W-7},${H-7} L${W-22},${H-7}`} />
+              <path d={`M${W-7},${H-14} Q${W-14},${H-7} ${W-22},${H-7}`} strokeWidth="0.6" opacity="0.6" />
+              <circle cx={W-7} cy={H-7} r="2.5" fill="rgba(216,188,131,0.4)" stroke="none" />
+            </g>
+
+            {/* بَارَكَ اللهُ لَكُمَا — bottom center */}
+            <text
+              x={MID} y={H - 18}
+              textAnchor="middle"
+              fontFamily="Amiri, serif"
+              fontSize="13"
+              fill="rgba(216,188,131,0.7)"
+              letterSpacing="1"
+            >
+              بَارَكَ اللهُ لَكُمَا
+            </text>
+          </svg>
+
+          {/* flap — Arabic pointed arch */}
+          <motion.div
+            animate={{ rotateX: isOpen ? -178 : 0 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            style={{ position: 'absolute', top: 0, left: 0, width: W, transformOrigin: 'top center', transformStyle: 'preserve-3d', zIndex: 6 }}
+          >
+            <svg width={W} height={FLAP_H} viewBox={`0 0 ${W} ${FLAP_H}`} style={{ display: 'block' }}>
+              <defs>
+                <linearGradient id="fF" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#2a5040" />
+                  <stop offset="100%" stopColor="#152e20" />
+                </linearGradient>
+                <linearGradient id="fB" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#f7edd8" />
+                  <stop offset="100%" stopColor="#ede0c4" />
+                </linearGradient>
+                <linearGradient id="fGold" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#8a6a2a" />
+                  <stop offset="50%" stopColor="#f0dfa8" />
+                  <stop offset="100%" stopColor="#8a6a2a" />
+                </linearGradient>
+                <pattern id="geoF" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+                  <polygon points="16,1 19.2,11 29.5,11 21.5,17.5 24.5,27.5 16,21.5 7.5,27.5 10.5,17.5 2.5,11 12.8,11"
+                    fill="none" stroke="rgba(216,188,131,0.18)" strokeWidth="0.7" />
+                  <circle cx="16" cy="16" r="3" fill="none" stroke="rgba(216,188,131,0.12)" strokeWidth="0.5" />
+                </pattern>
+                <clipPath id="flapClip">
+                  <polygon points={`0,0 ${W},0 ${MID},${FLAP_H}`} />
+                </clipPath>
+              </defs>
+
+              {/* front face */}
+              <polygon points={`0,0 ${W},0 ${MID},${FLAP_H}`} fill="url(#fF)" style={{ backfaceVisibility: 'hidden' }} />
+              <rect x="0" y="0" width={W} height={FLAP_H} fill="url(#geoF)" clipPath="url(#flapClip)" style={{ backfaceVisibility: 'hidden' }} />
+
+              {/* Arabic pointed arch on flap front */}
+              <path
+                d={`M ${MID-44},${FLAP_H*0.22} C ${MID-44},${FLAP_H*0.0} ${MID-10},${FLAP_H*0.0} ${MID},${FLAP_H*0.1} C ${MID+10},${FLAP_H*0.0} ${MID+44},${FLAP_H*0.0} ${MID+44},${FLAP_H*0.22} L ${MID+30},${FLAP_H*0.48} L ${MID},${FLAP_H*0.62} L ${MID-30},${FLAP_H*0.48} Z`}
+                fill="none" stroke="url(#fGold)" strokeWidth="1"
+                style={{ backfaceVisibility: 'hidden' }}
+              />
+              {/* small diamond at arch tip */}
+              <polygon
+                points={`${MID},${FLAP_H*0.04} ${MID+5},${FLAP_H*0.1} ${MID},${FLAP_H*0.16} ${MID-5},${FLAP_H*0.1}`}
+                fill="rgba(216,188,131,0.5)" stroke="none"
+                style={{ backfaceVisibility: 'hidden' }}
+              />
+
+              {/* gold top edge */}
+              <line x1="0" y1="1" x2={W} y2="1" stroke="url(#fGold)" strokeWidth="1.5" style={{ backfaceVisibility: 'hidden' }} />
+
+              {/* back face ivory */}
+              <polygon points={`0,0 ${W},0 ${MID},${FLAP_H}`} fill="url(#fB)" stroke="rgba(168,136,80,0.25)" strokeWidth="0.8"
+                style={{ backfaceVisibility: 'hidden', transform: 'rotateX(180deg)', transformOrigin: `${MID}px 0px` }} />
+            </svg>
+          </motion.div>
+
+          {/* wax seal — premium crescent + star + بَارَكَ */}
+          <motion.div
+            animate={{ opacity: isOpen ? 0 : 1, scale: isOpen ? 0.2 : 1 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            style={{ position: 'absolute', inset: 0, zIndex: 9, pointerEvents: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {/* outer glow ring */}
+            <div style={{ position: 'relative', width: 72, height: 72, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ position: 'absolute', inset: -4, borderRadius: '50%', border: '1px solid rgba(216,188,131,0.25)', boxShadow: '0 0 18px rgba(216,188,131,0.15)' }} />
+              <div style={{ position: 'absolute', inset: -1, borderRadius: '50%', border: '1px solid rgba(216,188,131,0.45)' }} />
+              <div style={{
+                width: 68, height: 68, borderRadius: '50%',
+                background: 'radial-gradient(circle at 32% 28%, #c8973a, #7a4e18)',
+                border: '1.5px solid rgba(216,188,131,0.9)',
+                boxShadow: '0 6px 24px rgba(0,0,0,0.7), inset 0 1px 3px rgba(255,220,120,0.4)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="44" height="44" viewBox="0 0 44 44">
+                  {/* crescent */}
+                  <path d="M22,5 A17,17 0 1,0 22,39 A12,12 0 1,1 22,5 Z" fill="rgba(253,240,208,0.92)" />
+                  {/* 5-pointed star */}
+                  <polygon
+                    points="32,12 33.5,17 38.5,17 34.5,20 36,25 32,22 28,25 29.5,20 25.5,17 30.5,17"
+                    fill="rgba(253,240,208,0.92)"
+                  />
+                </svg>
+              </div>
+            </div>
+          </motion.div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* TAP HINT */}
+        <motion.p
+          animate={{ opacity: isOpen ? 0 : [0.35, 0.85, 0.35] }}
+          transition={{ duration: 2.2, repeat: isOpen ? 0 : Infinity }}
+          style={{ fontSize: 8, letterSpacing: '0.28em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}
+        >
+          Tap to open
+        </motion.p>
+      </motion.div>
+    </>
+  )
+}
+
 function App() {
   const [invitationOpen, setInvitationOpen] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
@@ -186,7 +466,7 @@ function App() {
   return (
     <main className="w-full overflow-hidden bg-[#f8f3e9] text-[#263a2e]">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Amiri:wght@400;700&display=swap');
 
         .font-wedding {
           font-family: 'Cormorant Garamond', Georgia, serif;
@@ -271,94 +551,26 @@ function App() {
         }
       `}</style>
 
-      {/* ROYAL OPENING INVITATION */}
+      {/* ENVELOPE COVER */}
       <AnimatePresence>
         {!invitationOpen && (
           <motion.section
-            key="invitation-cover"
+            key="envelope-cover"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.04 }}
-            transition={{ duration: 0.85 }}
-            className="fixed inset-0 z-[100] flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#172c22]"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="fixed inset-0 z-[100] flex min-h-[100svh] items-center justify-center overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #0f1f17 0%, #1a3328 50%, #0d1a12 100%)' }}
           >
-            <img
-              src={photos.hero}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover opacity-30"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#14251d]/80 via-[#172c22]/75 to-[#101e17]/95" />
-            <div className="wedding-grain absolute inset-0 opacity-30" />
-
-            {Array.from({ length: 15 }).map((_, i) => (
-              <span
-                key={i}
-                className="falling-petal"
-                style={{
-                  left: `${(i * 37 + 5) % 100}%`,
-                  animationDelay: `${(i % 7) * -1.8}s`,
-                  animationDuration: `${12 + (i % 6) * 2}s`,
-                }}
-              />
+            {/* bg petals */}
+            {Array.from({ length: 12 }).map((_, i) => (
+              <span key={i} className="falling-petal" style={{ left: `${(i * 37 + 5) % 100}%`, animationDelay: `${(i % 7) * -1.8}s`, animationDuration: `${12 + (i % 6) * 2}s` }} />
             ))}
 
-            <motion.div
-              initial={{ opacity: 0, y: 28, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-              className="royal-frame relative mx-5 w-full max-w-lg border border-[#d8bc83]/50 px-6 py-12 text-center sm:mx-8 sm:px-12 sm:py-16"
-            >
-              <motion.div
-                animate={{ rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 8, repeat: Infinity }}
-                className="mb-6 flex justify-center text-[#e0c58f]"
-              >
-                <Sparkles size={26} strokeWidth={1} />
-              </motion.div>
-
-              <p className="mb-4 text-[9px] uppercase tracking-[0.35em] text-[#dfc896] sm:text-[10px]">
-                Bismillah-ir-Rahman-ir-Raheem
-              </p>
-
-              <p className="mb-5 font-wedding text-xl italic text-white/75 sm:text-2xl">
-                In the name of Allah, the Most Merciful
-              </p>
-
-              <p className="mb-5 text-[9px] uppercase tracking-[0.38em] text-[#d8bc83]">
-                The Nikkah Invitation
-              </p>
-
-              <h1 className="font-wedding text-6xl leading-[0.92] text-[#f8edda] sm:text-8xl">
-                Tuba
-                <span className="gold-shimmer my-3 block text-4xl italic sm:text-5xl">
-                  &amp;
-                </span>
-                Mahafuz
-              </h1>
-
-              <div className="mx-auto my-7 h-px w-20 bg-[#d8bc83]/65" />
-
-              <p className="text-[10px] uppercase tracking-[0.25em] text-white/75">
-                Sunday · 06 December 2026
-              </p>
-              <p className="mt-2 text-xs tracking-[0.18em] text-[#e1ca9b]">
-                6:20 in the evening · Mumbai
-              </p>
-
-              <motion.button
-                whileHover={{ scale: 1.035 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => setInvitationOpen(true)}
-                className="mt-10 inline-flex items-center gap-3 border border-[#d8bc83]/80 bg-[#d8bc83] px-7 py-4 text-[9px] uppercase tracking-[0.25em] text-[#1c3024] transition hover:bg-[#efdfb7] sm:px-9"
-              >
-                <Heart size={14} />
-                Open your invitation
-                <ArrowUpRight size={14} />
-              </motion.button>
-
-              <p className="mt-5 text-[9px] tracking-[0.1em] text-white/45">
-                A beautiful beginning awaits
-              </p>
-            </motion.div>
+            <EnvelopeScene onOpen={() => {
+              setInvitationOpen(true)
+              audioRef.current?.play().then(() => setMusicPlaying(true)).catch(() => {})
+            }} />
           </motion.section>
         )}
       </AnimatePresence>
