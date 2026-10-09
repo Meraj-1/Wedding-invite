@@ -1,0 +1,118 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #3e2523;
+  background: #f8f0e2;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  --maroon: #651d32;
+  --gold: #c9a45c;
+  --ivory: #f8f0e2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: #c9a45c;
+  color: #3e2523;
+}
+
+.font-royal {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.gold-text {
+  background: linear-gradient(
+    120deg,
+    #8b672e,
+    #e4c982,
+    #a47a37
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.royal-border {
+  border: 1px solid rgba(201, 164, 92, 0.65);
+}
+
+.ornament {
+  color: var(--gold);
+  letter-spacing: 0.35em;
+}
+
+.hero-overlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(28, 12, 18, 0.3),
+      rgba(39, 10, 20, 0.48)
+    ),
+    linear-gradient(
+      0deg,
+      rgba(35, 12, 18, 0.65),
+      transparent 65%
+    );
+}
+
+.gold-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 164, 92, 0.8),
+    transparent
+  );
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
