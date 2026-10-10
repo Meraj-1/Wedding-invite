@@ -23,7 +23,7 @@ const MAPS_URL =
   'https://www.google.com/maps/search/?api=1&query=Dhaneshwar%20Mangal%20Karylaye%2C%20Vangani%2C%20Maharashtra%2C%20India'
 
 // Add your music file at: public/music/wedding.mp3
-const MUSIC_URL = '/1.mp3'
+// const MUSIC_URL = '/1.mp3'
 
 // Optional: replace this with the family's WhatsApp number.
 const WHATSAPP_NUMBER = '91XXXXXXXXXX'
@@ -407,37 +407,37 @@ function App() {
   const [copied, setCopied] = useState(false)
   const audioRef = useRef(null)
 
-  useEffect(() => {
-    const audio = new Audio(MUSIC_URL)
-    audio.loop = true
-    audio.volume = 0.35
-    audioRef.current = audio
+  // useEffect(() => {
+  //   const audio = new Audio(MUSIC_URL)
+  //   audio.loop = true
+  //   audio.volume = 0.35
+  //   audioRef.current = audio
 
-    return () => {
-      audio.pause()
-      audioRef.current = null
-    }
-  }, [])
+  //   return () => {
+  //     audio.pause()
+  //     audioRef.current = null
+  //   }
+  // }, [])
 
-  const toggleMusic = async () => {
-    const audio = audioRef.current
-    if (!audio) return
+  // const toggleMusic = async () => {
+  //   const audio = audioRef.current
+  //   if (!audio) return
 
-    if (musicPlaying) {
-      audio.pause()
-      setMusicPlaying(false)
-      return
-    }
+  //   if (musicPlaying) {
+  //     audio.pause()
+  //     setMusicPlaying(false)
+  //     return
+  //   }
 
-    try {
-      setMusicError(false)
-      await audio.play()
-      setMusicPlaying(true)
-    } catch {
-      setMusicError(true)
-      setMusicPlaying(false)
-    }
-  }
+  //   try {
+  //     setMusicError(false)
+  //     await audio.play()
+  //     setMusicPlaying(true)
+  //   } catch {
+  //     setMusicError(true)
+  //     setMusicPlaying(false)
+  //   }
+  // }
 
   const rsvpUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     'Assalamu Alaikum! I would like to RSVP for the Nikkah of Tuba Mujawar and Mahafuz Khan on 6 December 2026.',
@@ -576,7 +576,7 @@ function App() {
       </AnimatePresence>
 
       {/* FLOATING MUSIC CONTROL */}
-      <button
+      {/* <button
         onClick={toggleMusic}
         aria-label={musicPlaying ? 'Pause wedding music' : 'Play wedding music'}
         title={musicError ? 'Add public/music/wedding.mp3 to enable music' : 'Toggle wedding music'}
@@ -588,7 +588,7 @@ function App() {
         </span>
         {musicPlaying && <Volume2 size={14} className="soft-breathe" />}
         {musicError && <VolumeX size={14} />}
-      </button>
+      </button> */}
 
       {/* NAVIGATION */}
       <header className="absolute left-0 right-0 top-0 z-30">
@@ -960,7 +960,7 @@ function App() {
       </section>
 
       {/* PHOTO MOMENT */}
-      <section id="gallery" className="bg-[#eee6d7] px-5 py-20 sm:px-8 sm:py-28">
+      {/* <section id="gallery" className="bg-[#eee6d7] px-5 py-20 sm:px-8 sm:py-28">
         <Reveal>
           <SectionLabel>A moment to remember</SectionLabel>
           <h2 className="mb-12 text-center font-wedding text-5xl text-[#263a2e] sm:text-7xl">
@@ -1007,7 +1007,7 @@ function App() {
         <p className="mt-7 text-center font-wedding text-xl italic text-[#8f754b]">
           A beautiful day. A lifetime of memories.
         </p>
-      </section>
+      </section> */}
 
       {/* RSVP */}
       <section id="rsvp" className="relative overflow-hidden bg-[#20382b] px-6 py-24 text-center sm:py-32">
