@@ -318,18 +318,18 @@ function EnvelopeScene({ onOpen }) {
           <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: 'absolute', inset: 0, zIndex: 3 }}>
             <defs>
               <linearGradient id="eB" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="50%" stopColor="#F8F3EC" />
-                <stop offset="100%" stopColor="#EFE8DE" />
+                <stop offset="0%" stopColor="#5D0000" />
+                <stop offset="50%" stopColor="#550000" />
+                <stop offset="100%" stopColor="#430000" />
               </linearGradient>
-              <linearGradient id="eL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#EFE7DD" /><stop offset="100%" stopColor="#F8F4ED" /></linearGradient>
-              <linearGradient id="eR" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#F8F4ED" /><stop offset="100%" stopColor="#EFE7DD" /></linearGradient>
-              <linearGradient id="eBt" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#EBE1D4" /><stop offset="100%" stopColor="#DFCFC0" /></linearGradient>
+              <linearGradient id="eL" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#4B0000" /><stop offset="100%" stopColor="#5C0000" /></linearGradient>
+              <linearGradient id="eR" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="#5C0000" /><stop offset="100%" stopColor="#4B0000" /></linearGradient>
+              <linearGradient id="eBt" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#4D0000" /><stop offset="100%" stopColor="#350000" /></linearGradient>
               <linearGradient id="goldShine" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#C8B7A6" />
-                <stop offset="40%" stopColor="#F8F3EC" />
+                <stop offset="0%" stopColor="#E7D4B3" />
+                <stop offset="40%" stopColor="#F7EAD7" />
                 <stop offset="60%" stopColor="#FFFFFF" />
-                <stop offset="100%" stopColor="#C8B7A6" />
+                <stop offset="100%" stopColor="#E7D4B3" />
               </linearGradient>
               {/* Islamic 8-pointed star tessellation */}
               <pattern id="geo" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
@@ -393,7 +393,7 @@ function EnvelopeScene({ onOpen }) {
               textAnchor="middle"
               fontFamily="Amiri, serif"
               fontSize="13"
-              fill="#5A728A"
+              fill="#F6EDE3"
               letterSpacing="1"
             >
               بَارَكَ اللهُ لَكُمَا
@@ -409,17 +409,17 @@ function EnvelopeScene({ onOpen }) {
             <svg width={W} height={FLAP_H} viewBox={`0 0 ${W} ${FLAP_H}`} style={{ display: 'block' }}>
               <defs>
                 <linearGradient id="fF" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#FCFAF6" />
-                  <stop offset="100%" stopColor="#EFE8DE" />
+                  <stop offset="0%" stopColor="#5D0000" />
+                  <stop offset="100%" stopColor="#430000" />
                 </linearGradient>
                 <linearGradient id="fB" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#FFFFFF" />
-                  <stop offset="100%" stopColor="#F8F4ED" />
+                  <stop offset="0%" stopColor="#5C0000" />
+                  <stop offset="100%" stopColor="#3D0000" />
                 </linearGradient>
                 <linearGradient id="fGold" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#C8B7A6" />
-                  <stop offset="50%" stopColor="#FAF7F2" />
-                  <stop offset="100%" stopColor="#C8B7A6" />
+                  <stop offset="0%" stopColor="#E7D4B3" />
+                  <stop offset="50%" stopColor="#F7EAD7" />
+                  <stop offset="100%" stopColor="#E7D4B3" />
                 </linearGradient>
                 <pattern id="geoF" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
                   <polygon points="16,1 19.2,11 29.5,11 21.5,17.5 24.5,27.5 16,21.5 7.5,27.5 10.5,17.5 2.5,11 12.8,11"
@@ -707,6 +707,7 @@ function App() {
             {[
               ['Our Families', '#families'],
               ['The Nikkah', '#occasion'],
+              ['Haldi & Mehndi', '#mehndi'],
               ['The Venue', '#venue'],
             ].map(([label, href]) => (
               <a
@@ -1154,6 +1155,133 @@ function App() {
         </div>
       </section>
 
+      {/* HALDI & MEHNDI */}
+      <section id="mehndi" className="relative px-5 py-24 sm:px-8 sm:py-32">
+        <div className="mx-auto max-w-5xl text-center">
+          <Reveal>
+            <div className="mb-3 text-center font-arabic text-2xl text-[#5A728A] sm:text-3xl">
+              بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </div>
+            <SectionLabel>Join us in celebration</SectionLabel>
+            <h2 className="font-wedding text-5xl text-[#1A2A44] sm:text-7xl">
+              Haldi &amp; Mehndi
+            </h2>
+            <p className="mt-3 font-wedding text-2xl italic text-[#5A728A] sm:text-3xl">
+              A joyful gathering filled with love, laughter and blessings.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <div className="relative mt-12 rounded-3xl border-2 border-[#C8B7A6]/60 bg-gradient-to-b from-[#FFFFFF] via-[#FAF7F2] to-[#F8F3EC] p-6 shadow-[0_20px_50px_-15px_rgba(200,183,166,0.35)] sm:mt-16 sm:p-12">
+              <div className="pointer-events-none absolute inset-3 rounded-2xl border border-[#C8B7A6]/30 sm:inset-5" />
+
+              <div className="pointer-events-none absolute left-5 top-5 text-[#C8B7A6]/40">
+                <ArabesqueCorner className="h-6 w-6" />
+              </div>
+              <div className="pointer-events-none absolute right-5 top-5 -scale-x-100 text-[#C8B7A6]/40">
+                <ArabesqueCorner className="h-6 w-6" />
+              </div>
+              <div className="pointer-events-none absolute bottom-5 left-5 -scale-y-100 text-[#C8B7A6]/40">
+                <ArabesqueCorner className="h-6 w-6" />
+              </div>
+              <div className="pointer-events-none absolute bottom-5 right-5 -scale-x-100 -scale-y-100 text-[#C8B7A6]/40">
+                <ArabesqueCorner className="h-6 w-6" />
+              </div>
+
+              <div className="relative">
+                <p className="font-wedding text-2xl italic text-[#5A728A] sm:text-3xl">
+                  Assalamu Alaikum!
+                </p>
+                <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#1A2A44]/80 sm:text-base sm:leading-8">
+                  By the grace of Allah (SWT), we invite you to join us in
+                  celebrating the Haldi &amp; Mehndi function of our dear
+                </p>
+                <h3 className="mt-2 font-wedding text-5xl font-medium text-[#1A2A44] sm:text-6xl">
+                  Tuba
+                </h3>
+                <p className="mt-2 font-wedding text-xl italic text-[#5A728A] sm:text-2xl">
+                  as she steps into this new chapter of her life.
+                </p>
+
+                <div className="mx-auto my-8 flex max-w-2xl items-center justify-center gap-3 text-[#C8B7A6]">
+                  <span className="h-px w-12 bg-[#C8B7A6]/50" />
+                  <RubElHizbStar size={16} />
+                  <span className="h-px w-12 bg-[#C8B7A6]/50" />
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-3 sm:gap-6">
+                  <div className="flex flex-col items-center rounded-t-[36px] rounded-b-2xl border border-[#C8B7A6]/40 bg-white/70 p-6 shadow-sm sm:rounded-t-[48px]">
+                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#C8B7A6]/60 bg-white text-[#5A728A] shadow-sm">
+                      <CalendarDays size={20} strokeWidth={1.3} />
+                    </div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C8B7A6]">
+                      Date
+                    </p>
+                    <p className="mt-2 font-wedding text-2xl font-medium text-[#1A2A44] sm:text-3xl">
+                      5th December
+                    </p>
+                    <p className="mt-1 font-wedding text-xl text-[#5A728A]">
+                      2026
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center rounded-t-[36px] rounded-b-2xl border border-[#C8B7A6]/40 bg-white/70 p-6 shadow-sm sm:rounded-t-[48px]">
+                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#C8B7A6]/60 bg-white text-[#5A728A] shadow-sm">
+                      <Clock3 size={20} strokeWidth={1.3} />
+                    </div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C8B7A6]">
+                      Timing &amp; Schedule
+                    </p>
+                    <p className="mt-2 font-wedding text-2xl font-medium text-[#1A2A44] sm:text-3xl">
+                      Lunch: 1:00 PM
+                    </p>
+                    <p className="mt-1 font-wedding text-xl text-[#5A728A]">
+                      Ceremony Starts: 4:00 PM
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center rounded-t-[36px] rounded-b-2xl border border-[#C8B7A6]/40 bg-white/70 p-6 shadow-sm sm:rounded-t-[48px]">
+                    <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#C8B7A6]/60 bg-white text-[#5A728A] shadow-sm">
+                      <MapPin size={20} strokeWidth={1.3} />
+                    </div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C8B7A6]">
+                      Venue
+                    </p>
+                    <address className="mt-2 not-italic leading-6 text-[#1A2A44]">
+                      203 / 1 WING, Green Lawns,
+                      <br />
+                      United Developers, Sai Nagar,
+                      <br />
+                      Vangani (W) – 421 503
+                    </address>
+                  </div>
+                </div>
+
+                <div className="mt-8 border-t border-[#C8B7A6]/35 pt-7">
+                  <p className="font-wedding text-xl italic text-[#5A728A] sm:text-2xl">
+                    We kindly ask for your valuable du’as and look forward to
+                    celebrating together!
+                  </p>
+                  <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C8B7A6]">
+                    Warmly
+                  </p>
+                  <p className="mt-1 font-wedding text-2xl text-[#1A2A44] sm:text-3xl">
+                    Sajid Mujawar
+                  </p>
+                  <a
+                    href="tel:+918356854527"
+                    className="mt-3 inline-flex items-center gap-2 text-sm text-[#5A728A] transition hover:text-[#1A2A44]"
+                  >
+                    <span>Contact: 8356854527</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* COUNTDOWN */}
       <section className="relative overflow-hidden bg-[#FAF6F0] px-6 py-24 sm:py-32">
         <img
@@ -1193,7 +1321,7 @@ function App() {
       </section>
 
       {/* VENUE */}
-      <section id="venue" className="px-5 py-24 sm:px-8 sm:py-32">
+      {/* <section id="venue" className="px-5 py-24 sm:px-8 sm:py-32">
         <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16">
           <Reveal className="relative">
             <div className="absolute -bottom-3 -left-3 h-full w-full border border-[#C8B7A6]/70" />
@@ -1243,7 +1371,7 @@ function App() {
             </p>
           </Reveal>
         </div>
-      </section>
+      </section> */}
 
       {/* RSVP */}
       <section id="rsvp" className="relative overflow-hidden bg-[#F3EDE4] px-6 py-24 text-center sm:py-32">
