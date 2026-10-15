@@ -5,7 +5,6 @@ import {
   ArrowDown,
   ArrowUpRight,
   CalendarDays,
-  Check,
   Clock3,
   Heart,
   MapPin,
@@ -25,8 +24,9 @@ const MAPS_URL =
 // Add your music file at: public/music/wedding.mp3
 // const MUSIC_URL = '/1.mp3'
 
-// Optional: replace this with the family's WhatsApp number.
-const WHATSAPP_NUMBER = '91xxxxxxxx'
+const WHATSAPP_NUMBER = '919137515881'
+const RSVP_MESSAGE =
+  "Assalamu Alaikum! I would like to RSVP for the Nikkah of Tuba Mujawar and Mahafuz Khan on 6 December 2026. Masha'Allah! May Allah bless the couple."
 
 const photos = {
   hero: '/hero-bg.png',
@@ -507,7 +507,6 @@ function App() {
   const [invitationOpen, setInvitationOpen] = useState(false)
   const [musicPlaying, setMusicPlaying] = useState(false)
   const [musicError, setMusicError] = useState(false)
-  const [copied, setCopied] = useState(false)
   const audioRef = useRef(null)
 
   // useEffect(() => {
@@ -542,29 +541,7 @@ function App() {
   //   }
   // }
 
-  const rsvpUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    'Assalamu Alaikum! I would like to RSVP for the Nikkah of Tuba Mujawar and Mahafuz Khan on 6 December 2026.',
-  )}`
-
-  const shareInvitation = async () => {
-    const shareData = {
-      title: 'Tuba & Mahafuz Khan | Nikkah Invitation',
-      text: 'You are cordially invited to celebrate the Nikkah of Tuba Mujawar and Mahafuz Khan on 6 December 2026.',
-      url: window.location.href,
-    }
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData)
-      } else {
-        await navigator.clipboard.writeText(window.location.href)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 2500)
-      }
-    } catch {
-      // The visitor may simply close the native share menu.
-    }
-  }
+  const rsvpUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(RSVP_MESSAGE)}`
 
   return (
     <main className="w-full overflow-hidden bg-[#F6F1EB] text-[#1A2A44]">
@@ -1404,16 +1381,6 @@ function App() {
             Send your wishes
             <ArrowUpRight size={14} />
           </a>
-
-          <div className="mt-4">
-            <button
-              onClick={shareInvitation}
-              className="inline-flex items-center gap-2 border border-[#5A728A]/40 bg-[#FFFFFF]/60 px-6 py-3 text-[9px] uppercase tracking-[0.18em] text-[#1A2A44] transition hover:border-[#1A2A44] hover:bg-[#FFFFFF]"
-            >
-              {copied ? <Check size={14} /> : <ArrowUpRight size={14} />}
-              {copied ? 'Link copied' : 'Share invitation'}
-            </button>
-          </div>
 
           <FloralDivider />
 
